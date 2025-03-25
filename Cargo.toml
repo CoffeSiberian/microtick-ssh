@@ -1,0 +1,7 @@
+[package]
+name = "microtick-ssh"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+ssh2 = "0.9.5"

@@ -59,7 +59,7 @@ jobs:
               run: cargo build -r
 
             - name: Rename executable
-              run: mv target/release/microtick-ssh microtick-ssh-linux
+              run: mv target/release/microtick-ssh target/release/microtick-ssh-linux
 
             - name: Upload executable
               uses: actions/upload-artifact@v4
@@ -86,7 +86,7 @@ jobs:
               run: cargo build -r
 
             - name: Rename executable
-              run: mv target/release/microtick-ssh microtick-ssh-macos
+              run: mv target/release/microtick-ssh target/release/microtick-ssh-macos
 
             - name: Upload executable
               uses: actions/upload-artifact@v4
@@ -108,7 +108,7 @@ jobs:
             - name: Download executable Windows
               uses: actions/download-artifact@v4
               with:
-                  name: microtick-ssh.exe
+                  name: microtick-ssh_windows.exe
 
             - name: Download executable Ubuntu
               uses: actions/download-artifact@v4

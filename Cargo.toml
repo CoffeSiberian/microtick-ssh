@@ -5,3 +5,6 @@ edition = "2024"
 
 [dependencies]
 ssh2 = "0.9.5"
+
+[build-dependencies]
+dotenv-build = "0.1.1"

@@ -4,9 +4,9 @@ A Rust library to connect to a MicroTick server via SSH to execute specific comm
 
 ## Export system variables
 
-```powershell
-$env:MT_SSH_HOST="192.168.1.1"
-$env:MT_SSH_PORT="22"
-$env:MT_SSH_USER="user"
-$env:MT_SSH_PASS="password"
+```bash
+MT_SSH_HOST=192.168.0.1
+MT_SSH_PORT=22
+MT_SSH_USER=user
+MT_SSH_PASS=password
 ```

@@ -1,4 +1,5 @@
 use ssh2::Session;
+use std::env;
 use std::io::Read;
 use std::net::TcpStream;
 
@@ -18,17 +19,17 @@ fn make_session(
     Ok(sess)
 }
 
-fn load_env() -> Option<(String, String, String, String)> {
-    let host = std::env::var("MT_SSH_HOST").ok()?;
-    let port = std::env::var("MT_SSH_PORT").ok()?;
-    let user = std::env::var("MT_SSH_USER").ok()?;
-    let pass = std::env::var("MT_SSH_PASS").ok()?;
+fn load_env() -> (&'static str, &'static str, &'static str, &'static str) {
+    let host = env!("MT_SSH_HOST");
+    let port = env!("MT_SSH_PORT");
+    let user = env!("MT_SSH_USER");
+    let pass = env!("MT_SSH_PASS");
 
-    Some((host, port, user, pass))
+    return (host, port, user, pass);
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let (host, port, user, pass) = load_env().unwrap();
+    let (host, port, user, pass) = load_env();
 
     let sess = make_session(&host, &port, &user, &pass)?;
 
@@ -37,13 +38,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
         return Ok(());
     }
-
-    if !sess.authenticated() {
-        println!("failed to authenticate");
-
-        return Ok(());
-    }
-
     let mut channel = sess.channel_session()?;
 
     channel

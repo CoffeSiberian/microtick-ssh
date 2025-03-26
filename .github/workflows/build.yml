@@ -129,4 +129,4 @@ jobs:
                   files: |
                       microtick-ssh_windows.exe
                       microtick-ssh-linux
-                      microtick-ssh_macos
+                      microtick-ssh-macos

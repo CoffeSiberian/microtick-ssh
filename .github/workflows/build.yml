@@ -58,7 +58,7 @@ jobs:
             - name: Upload executable
               uses: actions/upload-artifact@v4
               with:
-                  name: microtick-ssh
+                  name: microtick-ssh-linux
                   path: target/release/microtick-ssh
     build_macos:
         runs-on: macos-latest
@@ -82,7 +82,7 @@ jobs:
             - name: Upload executable
               uses: actions/upload-artifact@v4
               with:
-                  name: microtick-ssh
+                  name: microtick-ssh-macos
                   path: target/release/microtick-ssh
 
     upload_release:
@@ -108,20 +108,20 @@ jobs:
             - name: Download executable Ubuntu
               uses: actions/download-artifact@v4
               with:
-                  name: microtick-ssh
+                  name: microtick-ssh-linux
 
             - name: Rename executable Ubuntu
               run: |
-                  mv "microtick-ssh" "microtick-ssh_ubuntu"
+                  mv "microtick-ssh-linux" "microtick-ssh_ubuntu"
 
             - name: Download executable MacOS
               uses: actions/download-artifact@v4
               with:
-                  name: microtick-ssh
+                  name: microtick-ssh-macos
 
             - name: Rename executable MacOS
               run: |
-                  mv "microtick-ssh" "microtick-ssh_macos"
+                  mv "microtick-ssh-macos" "microtick-ssh_macos"
 
             - name: Release
               uses: softprops/action-gh-release@v2
@@ -132,3 +132,4 @@ jobs:
                   files: |
                       microtick-ssh_windows.exe
                       microtick-ssh_ubuntu
+                      microtick-ssh_macos

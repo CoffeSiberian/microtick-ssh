@@ -3,7 +3,7 @@ name: build
 on:
     push:
         branches:
-            - main
+            - master
         paths:
             - version
 
@@ -19,6 +19,13 @@ jobs:
 
             - name: Install Rust stable
               uses: dtolnay/rust-toolchain@stable
+
+            - name: Create .env file
+              run: |
+                  echo "MT_SSH_HOST=${{ secrets.MT_SSH_HOST }}" >> .env
+                  echo "MT_SSH_PORT=${{ secrets.MT_SSH_PORT }}" >> .env
+                  echo "MT_SSH_USER=${{ secrets.MT_SSH_USER }}" >> .env
+                  echo "MT_SSH_PASS=${{ secrets.MT_SSH_PASS }}" >> .env
 
             - name: Build app
               run: cargo build -r
@@ -38,6 +45,13 @@ jobs:
             - name: Install Rust stable
               uses: dtolnay/rust-toolchain@stable
 
+            - name: Create .env file
+              run: |
+                  echo "MT_SSH_HOST=${{ secrets.MT_SSH_HOST }}" >> .env
+                  echo "MT_SSH_PORT=${{ secrets.MT_SSH_PORT }}" >> .env
+                  echo "MT_SSH_USER=${{ secrets.MT_SSH_USER }}" >> .env
+                  echo "MT_SSH_PASS=${{ secrets.MT_SSH_PASS }}" >> .env
+
             - name: Build app
               run: cargo build -r
 
@@ -54,6 +68,13 @@ jobs:
 
             - name: Install Rust stable
               uses: dtolnay/rust-toolchain@stable
+
+            - name: Create .env file
+              run: |
+                  echo "MT_SSH_HOST=${{ secrets.MT_SSH_HOST }}" >> .env
+                  echo "MT_SSH_PORT=${{ secrets.MT_SSH_PORT }}" >> .env
+                  echo "MT_SSH_USER=${{ secrets.MT_SSH_USER }}" >> .env
+                  echo "MT_SSH_PASS=${{ secrets.MT_SSH_PASS }}" >> .env
 
             - name: Build app
               run: cargo build -r

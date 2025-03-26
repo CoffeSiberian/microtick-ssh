@@ -1,6 +1,5 @@
 use ssh2::Session;
 use std::env;
-use std::io::Read;
 use std::net::TcpStream;
 
 fn make_session(
@@ -28,11 +27,29 @@ fn load_env() -> (&'static str, &'static str, &'static str, &'static str) {
     return (host, port, user, pass);
 }
 
+fn get_user_input() -> String {
+    let mut input = String::new();
+    std::io::stdin().read_line(&mut input).unwrap();
+
+    return input.trim().to_uppercase();
+}
+
+fn valid_param(input: &str) -> bool {
+    return input == "Y" || input == "N";
+}
+
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let (host, port, user, pass) = load_env();
 
-    let sess = make_session(&host, &port, &user, &pass)?;
+    println!("¿Desabilitar el filtro de bloqueo de internet?");
+    let input = get_user_input();
 
+    if !valid_param(&input) {
+        println!("Opción no válida");
+        return Ok(());
+    }
+
+    let sess = make_session(&host, &port, &user, &pass)?;
     if !sess.authenticated() {
         println!("failed to authenticate");
 
@@ -40,14 +57,18 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
     let mut channel = sess.channel_session()?;
 
-    channel
-        .exec("/ip firewall filter set [find comment=\"Bloqueo Internet LAB 3\"] disabled=yes")?;
+    if input == "Y" {
+        channel.exec(
+            "/ip firewall filter set [find comment=\"Bloqueo Internet LAB 3\"] disabled=yes",
+        )?;
+        println!("Filtro de bloqueo de internet desactivado");
+    } else {
+        channel.exec(
+            "/ip firewall filter set [find comment=\"Bloqueo Internet LAB 3\"] disabled=no",
+        )?;
+        println!("Filtro de bloqueo de internet activado");
+    }
 
-    let mut s = String::new();
-    channel.read_to_string(&mut s)?;
-    println!("Salida: {}", s);
-
-    channel.wait_close()?;
     println!("Código de salida: {}", channel.exit_status()?);
 
     Ok(())

@@ -69,7 +69,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         println!("Filtro de bloqueo de internet activado");
     }
 
-    println!("Código de salida: {}", channel.exit_status()?);
+    println!("Presione ENTER para terminar");
+    get_user_input();
 
     Ok(())
 }

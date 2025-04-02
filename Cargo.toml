@@ -4,7 +4,8 @@ version = "1.4.0"
 edition = "2024"
 
 [dependencies]
-ssh2 = "0.9.5"
+ssh2 = { version = "0.9.5", features = ["vendored-openssl"] }
+openssl = { version = "0.10.71", features = ["vendored"] }
 
 [build-dependencies]
 dotenv-build = "0.1.1"
